@@ -1,21 +1,33 @@
 const Gameboard = (function () {
     const board = ["", "", "", "", "", "", "", "", ""];
     const getBoard = () => board;
-    const resetBoard= () => board.fill("");
+    const resetBoard= function (){
+        board.fill("")
+        const btn = document.querySelectorAll(".btn");
+         for(let i=0;i<btn.length;i++){
+            btn[i].textContent="";}
+    }
+
     const place = function(i, marker){
         board[i] = marker;}
+
     return {getBoard,place, resetBoard}
 })(); 
+
+const Leobtn= document.querySelector(".reset")
+Leobtn.addEventListener("click", () => {
+    Gameboard.resetBoard();
+    GamePvP.resetCurrentPlayer();})
+
 
 function createPlayer(name, marker) {
   return {name, marker};
 }
 
 const GamePvP = (function () {
-    const PlayerOne= createPlayer("Leo", 1);
-    const PlayerTwo= createPlayer("Edy", 2);
+    const PlayerOne= createPlayer("X Player", 1);
+    const PlayerTwo= createPlayer("O Player", 2);
     let currentPlayer = PlayerOne;
-
     function CheckWinner(){
         const winningCombinations = [
         [0, 1, 2], 
@@ -35,18 +47,58 @@ const GamePvP = (function () {
     if(board[winningCombinations[i][0]]!="" &&board[winningCombinations[i][0]]===board[winningCombinations[i][1]] && board[winningCombinations[i][1]]===board[winningCombinations[i][2]]){
     return true;}};
     };
+
+    const btn = document.querySelectorAll(".btn");
+    for(let i=0;i<btn.length;i++){
+        btn[i].addEventListener('click', (event) => {
+            if(CheckWinner()!==true){
+                const Value = event.target.dataset.index;
+                GamePvP.playRound(Value);
+                const clickedElement = event.target;
+                if(currentPlayer===PlayerTwo){clickedElement.textContent = "X";}
+                    else{clickedElement.textContent = "O";}
+                   
+    }});
+
+}
+
+const resetBtn= document.createElement("button");
+
     function playRound(i){
+        if(Gameboard.getBoard()[i]===""){
         Gameboard.place(i, currentPlayer.marker);
+        console.log(currentPlayer);
+
+        if(CheckWinner()===true){console.log("winner")
+            
+                const win = document.querySelector("dialog");
+                const closeButton = document.querySelector("dialog button");
+                const winnerDiv= document.querySelector(".winnerDiv");
+                
+
+                winnerDiv.textContent="Winner is: "+currentPlayer.name;
+                win.showModal();
+                closeButton.addEventListener("click", () => {
+                dialog.close();})
+                win.appendChild(resetBtn)
+                resetBtn.textContent="Reset";
+                resetBtn.addEventListener("click", () => {
+                Gameboard.resetBoard();
+                GamePvP.resetCurrentPlayer();
+                win.close();})
+
+
+                ;} 
+
         if(currentPlayer===PlayerOne){currentPlayer=PlayerTwo;}
-        else{currentPlayer=PlayerOne;}
-        if(CheckWinner()===true){console.log("winner")} //////winner
+        else{currentPlayer=PlayerOne;}}
+
+
+    
         console.log(Gameboard.getBoard());
     }
+const resetCurrentPlayer = (function () {
+    currentPlayer = PlayerOne;})
 
-    return {playRound}
+    return {playRound, resetCurrentPlayer}
 })(); 
-
-
-
-
-

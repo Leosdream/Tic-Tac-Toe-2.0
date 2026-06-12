@@ -7,11 +7,26 @@
 		<link rel="stylesheet" href="style.css">
         <script src="script.js" defer></script>
 	</head>
-	<body>
+	<body id="body">
 		<main id="game" class="container">
-			<h1>Tic Tac Toe</h1>
-			<div id="board" class="board" aria-label="Tic Tac Toe board"></div>
-			<button id="reset">Reset</button>
+			<h1 class="title">Tic Tac Toe</h1>
+			<button id="reset" class="reset">Reset</button>
+			<div id="board" class="board" aria-label="Tic Tac Toe board">
+				<button data-index="0" class="btn"></button>
+				<button data-index="1" class="btn"></button>
+				<button data-index="2" class="btn"></button>
+				<button data-index="3" class="btn"></button>
+				<button data-index="4" class="btn"></button>
+				<button data-index="5" class="btn"></button>
+				<button data-index="6" class="btn"></button>
+				<button data-index="7" class="btn"></button>
+				<button data-index="8" class="btn"></button>
+
+			</div>
 		</main>
+		<dialog class="dialog" id="dialog"">
+			<button autofocus class="dialog-close">x</button>
+			<div class="winnerDiv"> </div>
+    </dialog>
 	</body>
 </html>
