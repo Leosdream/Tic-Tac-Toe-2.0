@@ -6,6 +6,7 @@ const Gameboard = (function () {
         const btn = document.querySelectorAll(".btn");
          for(let i=0;i<btn.length;i++){
             btn[i].textContent="";}
+
     }
 
     const place = function(i, marker){
@@ -45,15 +46,18 @@ const GamePvP = (function () {
 
     for (let i = 0; i < winningCombinations.length; i++) {
     if(board[winningCombinations[i][0]]!="" &&board[winningCombinations[i][0]]===board[winningCombinations[i][1]] && board[winningCombinations[i][1]]===board[winningCombinations[i][2]]){
-    return true;}};
+    return true;}
+
+};
     };
 
     const btn = document.querySelectorAll(".btn");
     for(let i=0;i<btn.length;i++){
         btn[i].addEventListener('click', (event) => {
-            if(CheckWinner()!==true){
-                const Value = event.target.dataset.index;
+            const Value = event.target.dataset.index;
+            if(CheckWinner()!==true && Gameboard.getBoard()[Value]===""){
                 GamePvP.playRound(Value);
+                turn.textContent="It's "+currentPlayer.name+"'s turn";
                 const clickedElement = event.target;
                 if(currentPlayer===PlayerTwo){clickedElement.textContent = "X";}
                     else{clickedElement.textContent = "O";}
@@ -62,43 +66,40 @@ const GamePvP = (function () {
 
 }
 
+const turn = document.querySelector(".turn");
 const resetBtn= document.createElement("button");
+resetBtn.className="resetBtn";
+const win = document.querySelector("dialog");
+ const closeButton = document.querySelector("dialog button");
+ const winnerDiv= document.querySelector(".winnerDiv");
+closeButton.addEventListener("click", () => {
+                dialog.close();})
+                win.appendChild(resetBtn)
+                resetBtn.textContent="Reset";
+resetBtn.addEventListener("click", () => {
+                Gameboard.resetBoard();
+                GamePvP.resetCurrentPlayer();
+                win.close();})
 
     function playRound(i){
         if(Gameboard.getBoard()[i]===""){
         Gameboard.place(i, currentPlayer.marker);
         console.log(currentPlayer);
-
         if(CheckWinner()===true){console.log("winner")
-            
-                const win = document.querySelector("dialog");
-                const closeButton = document.querySelector("dialog button");
-                const winnerDiv= document.querySelector(".winnerDiv");
-                
-
                 winnerDiv.textContent="Winner is: "+currentPlayer.name;
                 win.showModal();
-                closeButton.addEventListener("click", () => {
-                dialog.close();})
-                win.appendChild(resetBtn)
-                resetBtn.textContent="Reset";
-                resetBtn.addEventListener("click", () => {
-                Gameboard.resetBoard();
-                GamePvP.resetCurrentPlayer();
-                win.close();})
-
-
                 ;} 
 
         if(currentPlayer===PlayerOne){currentPlayer=PlayerTwo;}
         else{currentPlayer=PlayerOne;}}
 
-
-    
+        if(Gameboard.getBoard().includes("")===false && CheckWinner()!==true){
+            winnerDiv.textContent="It's a draw";
+                win.showModal();
+        }
         console.log(Gameboard.getBoard());
     }
 const resetCurrentPlayer = (function () {
     currentPlayer = PlayerOne;})
-
     return {playRound, resetCurrentPlayer}
 })(); 
