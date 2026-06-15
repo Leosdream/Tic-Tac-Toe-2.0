@@ -5,6 +5,11 @@ body {
   margin: 0;
 }
 
+.container {
+  width: 95vw;
+  max-width: 500px;
+}
+
 .title{ 
   text-align: center;
 }
@@ -13,8 +18,8 @@ body {
 }
 
 .board{
-  height: 500px; /* add vh */
-  width: 500px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
    display: grid;
    grid-template-columns: repeat(3, 1fr);
    grid-template-rows: repeat(3, 1fr);
@@ -24,7 +29,7 @@ body {
   border: 1px solid black;
   background-color: transparent;
   cursor: pointer;
-  font-size: 120px;
+  font-size: clamp(3rem, 20vw, 120px);
 }
 
 .btn:nth-child(-n+3) {
@@ -50,7 +55,8 @@ body {
 
 .dialog:modal {
     display: flex; 
-    width: 45vh;
+    width: 90vw;
+    max-width: 400px;
     height: 20vh;
     flex-direction: column;
     align-items: center;
