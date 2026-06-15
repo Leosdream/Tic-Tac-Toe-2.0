@@ -6,19 +6,21 @@ const Gameboard = (function () {
         const btn = document.querySelectorAll(".btn");
          for(let i=0;i<btn.length;i++){
             btn[i].textContent="";}
-
+            GamePvP.resetCurrentPlayer();
     }
 
     const place = function(i, marker){
         board[i] = marker;}
 
-    return {getBoard,place, resetBoard}
-})(); 
-
-const Leobtn= document.querySelector(".reset")
+        const Leobtn= document.querySelector(".reset")
 Leobtn.addEventListener("click", () => {
     Gameboard.resetBoard();
     GamePvP.resetCurrentPlayer();})
+
+    return {getBoard,place, resetBoard}
+})(); 
+
+
 
 
 function createPlayer(name, marker) {
@@ -66,6 +68,10 @@ const GamePvP = (function () {
 
 }
 
+const resetCurrentPlayer = (function () {
+    currentPlayer = PlayerOne;
+turn.textContent="It's "+currentPlayer.name+"'s turn";})
+
 const turn = document.querySelector(".turn");
 const resetBtn= document.createElement("button");
 resetBtn.className="resetBtn";
@@ -99,7 +105,6 @@ resetBtn.addEventListener("click", () => {
         }
         console.log(Gameboard.getBoard());
     }
-const resetCurrentPlayer = (function () {
-    currentPlayer = PlayerOne;})
+
     return {playRound, resetCurrentPlayer}
 })(); 

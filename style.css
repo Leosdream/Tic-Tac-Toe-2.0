@@ -76,7 +76,7 @@ body {
 }
 
 .winnerDiv{
-  font-size: clamp(30px, 3vw, 80px);
+  font-size: clamp(30px,2vw,5vw )
 }
 
 .resetBtn{
@@ -89,5 +89,20 @@ body {
 
 .turn{
 padding: 20px 0 20px 0;
+font-size: larger;
+}
+
+.game-controls {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+
+
+.reset{
+   background-color: rgb(0, 0, 0);
   
+  cursor: pointer;
+  color: white;
 }
