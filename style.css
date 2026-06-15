@@ -112,3 +112,10 @@ font-size: larger;
   cursor: pointer;
   color: white;
 }
+
+@media (max-width: 480px) {
+  .game-controls {
+    justify-content: center;
+    gap: 30px; 
+  }
+}
